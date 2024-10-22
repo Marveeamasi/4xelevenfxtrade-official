@@ -12,123 +12,93 @@ const transporter = nodemailer.createTransport({
 });
 
 // Email sending logic using Nodemailer
-async function sendEmail(userEmail, username, profit) {
+async function sendEmail(email, username, profit) {
   const mailOptions = {
     from: 'info@4xeleventrade.store',
-    to: userEmail,
+    to: email,
     subject: 'Weekly Profit Notification',
     text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week which has been added to investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,
   };
-   try {
+  try {
     await transporter.sendMail(mailOptions);
-    console.log(`Email sent to ${userEmail}`);
+    console.log(`Email sent to ${email}`);
   } catch (error) {
-    console.error(`Error sending email to ${userEmail}:`, error);
+    console.error(`Error sending email to ${email}:`, error);
   }
 }
 
-// Schedule the emails and updates
-export default function scheduleEmails({ userEmail, plan, userId, currentId, username }) {
-  let weeks = 0;
-  let totalWeeks = 0;
-  let interestRate = 0;
-  let daysRemaining = 7; // Start with 7 days for the first interest payment
-  let specCurrent = {};
+// Main function to handle weekly updates
+export default async function scheduleEmails() {
+  try {
+    const userCurrentsDocs = await db.collection('userCurrents').get();
 
-  // Set totalWeeks and interestRate based on plan
-  switch (plan) {
-    case 'student':
-      totalWeeks = 2;
-      interestRate = 0.10;
-      break;
-    case 'worker':
-      totalWeeks = 4;
-      interestRate = 0.12;
-      break;
-    case 'platinium':
-      totalWeeks = 12;
-      interestRate = 0.15;
-      break;
-    case 'retirement':
-      totalWeeks = 52;
-      interestRate = 0.20;
-      break;
-    default:
-      totalWeeks = 0;
-  }
+    userCurrentsDocs.forEach(async (doc) => {
+      const { currents } = doc.data();
+      
+      for (const current of currents) {
+        let { email, username, initial, nextPay, weeks, plan } = current;
+        let interestRate = 0;
+        let totalWeeks = 0;
 
-  // Fetch current object
-  const getCurrent = async () => {
-    try {
-      const userCurrentsDoc = await getDoc(doc(db, 'userCurrents', userId));
-      if (userCurrentsDoc.exists()) {
-        const currents = userCurrentsDoc.data().currents || [];
-        specCurrent = currents.find((c) => c.id === currentId);
-        if (!specCurrent) {
-          console.error(`Current with ID ${currentId} not found. Skipping update for this current.`);
-          return null;  // Return null to indicate that no current was found
+        // Calculate interest rate and total weeks based on the plan
+        switch (plan) {
+          case 'student':
+            interestRate = 0.10;
+            totalWeeks = 2;
+            break;
+          case 'worker':
+            interestRate = 0.12;
+            totalWeeks = 4;
+            break;
+          case 'platinium':
+            interestRate = 0.15;
+            totalWeeks = 12;
+            break;
+          case 'retirement':
+            interestRate = 0.20;
+            totalWeeks = 52;
+            break;
+          default:
+            totalWeeks = 0;
         }
-        return { currents, specCurrent };
-      } else {
-        console.error('User currents not found');
-        return null;
-      }
-    } catch (error) {
-      console.error('Error fetching currents:', error);
-      return null;
-    }
-  };
 
-  // Update current object in the currents array
-  const updateCurrent = async (updatedCurrent) => {
-    try {
-      const { currents } = await getCurrent();
-      const updatedCurrents = currents.map((c) => (c.id === currentId ? updatedCurrent : c));
-      await updateDoc(doc(db, 'userCurrents', userId), { currents: updatedCurrents });
-      console.log(`Current updated for user: ${userId}`);
-    } catch (error) {
-      console.error(`Error updating current for user ${userId}:`, error);
-    }
-  };
-
-  const dailyIntervalId = setInterval(async () => {
-    try {
-      await getCurrent();
-      if (daysRemaining <= 0) {
-        daysRemaining = 7;  // Reset after each payment
-
-        // Weekly update (every 7 days)
-        weeks++;
-        const newAmount = parseFloat(specCurrent?.initial) * (1 + interestRate * weeks);
-        const profit = newAmount - parseFloat(specCurrent?.initial);
-
-        // Update `newAmount`, `profit`, and `nextPay`
-        await updateCurrent({
-          ...specCurrent,
-          currentAmount: newAmount,
-          profit: profit,
-          nextPay: daysRemaining, // Reset nextPay to 7
-          durationElapsed: weeks >= totalWeeks, // Mark plan completion if total weeks are reached
-        });
-
-        // Send weekly email
-        await sendEmail(userEmail, username, profit);
-        console.log(`Weekly update: Amount ${newAmount}, Profit ${profit}`);
-
-        // Stop the interval if plan duration is complete
+        // Check if the plan duration has elapsed
         if (weeks >= totalWeeks) {
-          clearInterval(dailyIntervalId);
-          console.log('Plan duration complete, interval cleared.');
-          return;
+          console.log(`Plan duration completed for ${email}. No further updates.`);
+          continue; // Skip this current object since its duration has elapsed
         }
-      } else {
-        // Daily update for `nextPay`
-        daysRemaining--;
-        await updateCurrent({ ...specCurrent, nextPay: daysRemaining });
-        console.log(`Next pay day updated: ${daysRemaining} days remaining`);
+
+        // Weekly update logic (similar to your previous interval logic)
+        if (nextPay <= 0) {
+          let newAmount = parseFloat(initial) * (1 + interestRate);
+          let profit = newAmount - parseFloat(initial);
+          let updatedWeeks = weeks + 1;
+
+          // Update current data
+          await updateDoc(doc.ref, {
+            ...current,
+            currentAmount: newAmount,
+            profit: profit,
+            nextPay: 7, // Reset for the next week
+            weeks: updatedWeeks,
+            durationElapsed: updatedWeeks === totalWeeks // Mark as true when total weeks are completed
+          });
+
+          // Send email
+          await sendEmail(email, username, profit);
+          console.log(`Weekly email sent for user ${email}`);
+        } else {
+          // Just decrement nextPay for daily countdown
+          await updateDoc(doc.ref, {
+            ...current,
+            nextPay: nextPay - 1
+          });
+          console.log(`Next pay day updated: ${nextPay - 1} days remaining for ${email}`);
+        }
       }
-    } catch (error) {
-      console.error('Error updating next pay or weekly values:', error);
-    }
-  },24 * 60 * 60 * 1000); // one day
-}
+    });
+  } catch (error) {
+    console.error('Error running scheduleEmails:', error);
+  }
+      }
+                             

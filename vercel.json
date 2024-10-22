@@ -1,5 +1,6 @@
 {
-  "functions": {
-    "api/schedule/route.js": {}
-  }
+  "crons": [{
+    "path": "/api/schedule",
+    "schedule": "0 0 * * 0",
+  }]
 }

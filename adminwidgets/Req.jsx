@@ -121,27 +121,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
     const updatedRequests = requests.map((request) =>
       request.id === selectedData.id ? updatedRequest : request
     );
-  
-    const sendToDatadb = async () => {
-      const createdAtDate = new Date().toISOString();
       try {
-        const res = await axios.post('/api/investment', {
-          initialAmount: amountCheck,
-          createdAtDate,
-          userEmail: user,
-          plan: plan,
-          userId,
-          username,
-          currentId: id,
-        });
-        console.log('Investment created to db:', res.data);
-      } catch (error) {
-        console.error('Error creating investment to db:', error);
-        throw error; // Re-throw the error to stop execution if it fails
-      }
-    };
-  
-    try {
       // Update user transaction in Firestore
       await updateDoc(requestRef, { requests: updatedRequests });
   
@@ -155,9 +135,9 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
           username,
           initial: amountCheck,
           currentAmount: amountCheck,
-          userId,
-          profit: 0,
-          durationElapsed: false
+          userId,   
+          weeks: 0,
+          nextPay: 7,
         })
       });
       await emailjs.send(
@@ -166,9 +146,6 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
       templateParamsForAccept,
       'MIRKY7yUv_4VJdUdi' 
       );
-  
-      // Save investment to database
-      await sendToDatadb();
   
       // Only show alert after all steps have been completed successfully
       setLoading(false);

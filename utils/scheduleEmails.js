@@ -36,9 +36,11 @@ export default async function scheduleEmails() {
       const { currents } = doc.data();
       
       for (const current of currents) {
-        let { email, username, initial, nextPay, weeks, plan } = current;
+        let { email, username, initial, plan } = current;
         let interestRate = 0;
         let totalWeeks = 0;
+        let nextPay = current.nextPay || 7;
+        let weeks = current.weeks || 0;
 
         // Calculate interest rate and total weeks based on the plan
         switch (plan) {

@@ -2,9 +2,9 @@
   "cron": {
     "jobs": [
       {
-        "path": "/api/schedule",  // Path to your API route
-        "schedule": "0 0 * * 0",  // Every Sunday at midnight
-        "method": "POST"            // HTTP method for the request
+        "path": "/api/schedule", 
+        "schedule": "0 0 * * 0", 
+        "method": "POST"
       }
     ]
   }

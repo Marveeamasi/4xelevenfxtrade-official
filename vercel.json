@@ -1,11 +1,9 @@
 {
-  "cron": {
-    "jobs": [
+  "cron": [
       {
         "path": "/api/schedule", 
         "schedule": "0 0 * * 0", 
         "method": "POST"
       }
     ]
-  }
 }

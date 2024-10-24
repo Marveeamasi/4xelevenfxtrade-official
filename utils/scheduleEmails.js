@@ -1,12 +1,12 @@
 import { db } from '@/firebase';
-import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
 import nodemailer from 'nodemailer';
 
 // Create transporter for sending emails
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'info@4xeleventrade.store', // your email
+    user: 'info@4xeleventrade.store',
     pass: 'bbtp pevz enzn evnr', // your email password or app-specific password
   },
 });
@@ -37,7 +37,7 @@ export default async function scheduleEmails() {
       
       // Iterate through each 'current' object for the user
       for (const current of currents) {
-        const { email, username, initial, plan } = current;
+        const { email, username, initial, plan, id } = current;
         let interestRate = 0;
         let totalWeeks = 0;
         let nextPay = current.nextPay || 7;
@@ -87,10 +87,10 @@ export default async function scheduleEmails() {
             durationElapsed: updatedWeeks === totalWeeks, // Set true when all weeks are completed
           };
 
-          // Update Firestore
+          // Update Firestore: Find the correct user and update the specific current object
           const docRef = doc(db, 'userCurrents', docSnap.id); // Reference to the current user's document
           await updateDoc(docRef, {
-            currents: currents.map(c => (c.id === current.id ? updatedCurrent : c)) // Update only the current object
+            currents: currents.map(c => (c.id === id ? updatedCurrent : c)) // Update only the matching 'current' object
           });
 
           // Send the weekly email
@@ -103,10 +103,10 @@ export default async function scheduleEmails() {
             nextPay: nextPay - 1
           };
 
-          // Update Firestore
+          // Update Firestore: Update only the matching 'current' object
           const docRef = doc(db, 'userCurrents', docSnap.id);
           await updateDoc(docRef, {
-            currents: currents.map(c => (c.id === current.id ? updatedCurrent : c))
+            currents: currents.map(c => (c.id === id ? updatedCurrent : c))
           });
 
           console.log(`Next pay day updated: ${nextPay - 1} days remaining for ${email}`);

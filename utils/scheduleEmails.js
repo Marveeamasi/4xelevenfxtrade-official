@@ -17,7 +17,7 @@ async function sendEmail(email, username, profit) {
     from: 'info@4xeleventrade.store',
     to: email,
     subject: 'Weekly Profit Notification',
-    text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week which has been added to investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,
+    text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,
   };
   try {
     await transporter.sendMail(mailOptions);
@@ -30,19 +30,20 @@ async function sendEmail(email, username, profit) {
 // Main function to handle weekly updates
 export default async function scheduleEmails() {
   try {
-    const userCurrentsDocs = await db.collection('userCurrents').get();
+    const userCurrentsDocs = await db.collection('userCurrents').get(); // Fetch all documents in userCurrents collection
 
-    userCurrentsDocs.forEach(async (doc) => {
-      const { currents } = doc.data();
+    userCurrentsDocs.forEach(async (docSnap) => {
+      const { currents } = docSnap.data(); // Extract currents array
       
+      // Iterate through each 'current' object for the user
       for (const current of currents) {
-        let { email, username, initial, plan } = current;
+        const { email, username, initial, plan } = current;
         let interestRate = 0;
         let totalWeeks = 0;
         let nextPay = current.nextPay || 7;
         let weeks = current.weeks || 0;
 
-        // Calculate interest rate and total weeks based on the plan
+        // Set interest rate and duration based on plan type
         switch (plan) {
           case 'student':
             interestRate = 0.10;
@@ -64,37 +65,50 @@ export default async function scheduleEmails() {
             totalWeeks = 0;
         }
 
-        // Check if the plan duration has elapsed
+        // Check if the plan duration has completed
         if (weeks >= totalWeeks) {
           console.log(`Plan duration completed for ${email}. No further updates.`);
-          continue; // Skip this current object since its duration has elapsed
+          continue; // Skip the update if the plan has ended
         }
 
-        // Weekly update logic (similar to your previous interval logic)
+        // Weekly update logic when the nextPay reaches 0 (time to pay)
         if (nextPay <= 0) {
-          let newAmount = parseFloat(initial) * (1 + interestRate);
-          let profit = newAmount - parseFloat(initial);
-          let updatedWeeks = weeks + 1;
+          const newAmount = parseFloat(initial) * (1 + interestRate);
+          const profit = newAmount - parseFloat(initial);
+          const updatedWeeks = weeks + 1;
 
-          // Update current data
-          await updateDoc(doc.ref, {
+          // Update the 'current' object in the array
+          const updatedCurrent = {
             ...current,
             currentAmount: newAmount,
-            profit: profit,
-            nextPay: 7, // Reset for the next week
+            profit,
+            nextPay: 7, // Reset nextPay for the next week
             weeks: updatedWeeks,
-            durationElapsed: updatedWeeks === totalWeeks // Mark as true when total weeks are completed
+            durationElapsed: updatedWeeks === totalWeeks, // Set true when all weeks are completed
+          };
+
+          // Update Firestore
+          const docRef = doc(db, 'userCurrents', docSnap.id); // Reference to the current user's document
+          await updateDoc(docRef, {
+            currents: currents.map(c => (c.id === current.id ? updatedCurrent : c)) // Update only the current object
           });
 
-          // Send email
+          // Send the weekly email
           await sendEmail(email, username, profit);
           console.log(`Weekly email sent for user ${email}`);
         } else {
-          // Just decrement nextPay for daily countdown
-          await updateDoc(doc.ref, {
+          // Decrement nextPay for daily countdown
+          const updatedCurrent = {
             ...current,
             nextPay: nextPay - 1
+          };
+
+          // Update Firestore
+          const docRef = doc(db, 'userCurrents', docSnap.id);
+          await updateDoc(docRef, {
+            currents: currents.map(c => (c.id === current.id ? updatedCurrent : c))
           });
+
           console.log(`Next pay day updated: ${nextPay - 1} days remaining for ${email}`);
         }
       }
@@ -102,5 +116,4 @@ export default async function scheduleEmails() {
   } catch (error) {
     console.error('Error running scheduleEmails:', error);
   }
-      }
-                             
+}

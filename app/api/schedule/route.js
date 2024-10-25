@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import scheduleEmails from '@/utils/scheduleEmails';
 
-export async function POST() { // Change to POST
+export async function GET() { 
   try {
     // Call the scheduling function
     await scheduleEmails();

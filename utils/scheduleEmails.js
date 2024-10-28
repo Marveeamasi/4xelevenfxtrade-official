@@ -1,5 +1,5 @@
 import { db } from '@/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, getDocs } from 'firebase/firestore';
 import nodemailer from 'nodemailer';
 
 // Create transporter for sending emails
@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'info@4xeleventrade.store',
-    pass: 'bbtp pevz enzn evnr', // your email password or app-specific password
+    pass: 'bbtp pevz enzn evnr',
   },
 });
 
@@ -19,6 +19,7 @@ async function sendEmail(email, username, profit) {
     subject: 'Weekly Profit Notification',
     text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,
   };
+
   try {
     await transporter.sendMail(mailOptions);
     console.log(`Email sent to ${email}`);
@@ -30,18 +31,25 @@ async function sendEmail(email, username, profit) {
 // Main function to handle weekly updates
 export default async function scheduleEmails() {
   try {
-    const userCurrentsDocs = await db.collection('userCurrents').get(); // Fetch all documents in userCurrents collection
+    const userCurrentsDocs = await getDocs(collection(db, 'userCurrents'));
 
-    userCurrentsDocs.forEach(async (docSnap) => {
-      const { currents } = docSnap.data(); // Extract currents array
-      
+    // Iterate through each document in userCurrents collection
+    for (const docSnap of userCurrentsDocs.docs) {
+      const { currents } = docSnap.data();
+
+      if (!Array.isArray(currents) || currents.length === 0) {
+        console.log(`No 'currents' array found or it's empty for document ID: ${docSnap.id}`);
+        continue;
+      }
+
       // Iterate through each 'current' object for the user
       for (const current of currents) {
         const { email, username, initial, plan, id } = current;
         let interestRate = 0;
         let totalWeeks = 0;
-        let nextPay = current.nextPay || 7;
-        let weeks = current.weeks || 0;
+        let nextPay = current?.nextPay ?? 7;
+        let weeks = current?.weeks ?? 0;
+        let profitCount = current?.profitCount ?? 0;
 
         // Set interest rate and duration based on plan type
         switch (plan) {
@@ -65,15 +73,17 @@ export default async function scheduleEmails() {
             totalWeeks = 0;
         }
 
-        // Check if the plan duration has completed
         if (weeks >= totalWeeks) {
           console.log(`Plan duration completed for ${email}. No further updates.`);
-          continue; // Skip the update if the plan has ended
+          continue;
         }
 
-        // Weekly update logic when the nextPay reaches 0 (time to pay)
+        // Weekly update logic when nextPay is 0
         if (nextPay <= 0) {
-          const newAmount = parseFloat(initial) * (1 + interestRate);
+          console.log('its a week now');
+         if(profitCount === 0){
+          console.log('its first weekly update');
+          const newAmount = parseFloat(initial) * (1.0 + interestRate);
           const profit = newAmount - parseFloat(initial);
           const updatedWeeks = weeks + 1;
 
@@ -84,36 +94,62 @@ export default async function scheduleEmails() {
             profit,
             nextPay: 7, // Reset nextPay for the next week
             weeks: updatedWeeks,
-            durationElapsed: updatedWeeks === totalWeeks, // Set true when all weeks are completed
+            durationElapsed: updatedWeeks === totalWeeks,
+            profitCount: 1.0
           };
 
-          // Update Firestore: Find the correct user and update the specific current object
-          const docRef = doc(db, 'userCurrents', docSnap.id); // Reference to the current user's document
-          await updateDoc(docRef, {
-            currents: currents.map(c => (c.id === id ? updatedCurrent : c)) // Update only the matching 'current' object
-          });
-
-          // Send the weekly email
-          await sendEmail(email, username, profit);
-          console.log(`Weekly email sent for user ${email}`);
-        } else {
-          // Decrement nextPay for daily countdown
-          const updatedCurrent = {
-            ...current,
-            nextPay: nextPay - 1
-          };
-
-          // Update Firestore: Update only the matching 'current' object
           const docRef = doc(db, 'userCurrents', docSnap.id);
           await updateDoc(docRef, {
-            currents: currents.map(c => (c.id === id ? updatedCurrent : c))
+            currents: currents.map(c => (c.id === id ? updatedCurrent : c)),
+          });
+
+          await sendEmail(email, username, profit);
+          console.log(`Weekly email sent for user ${email}`);
+         }else{
+          console.log('its not first weekly update');
+          profitCount = profitCount + 0.1;
+          const newAmount = parseFloat(initial) * (profitCount + interestRate);
+          const profit = newAmount - parseFloat(initial);
+          const updatedWeeks = weeks + 1;
+
+          // Update the 'current' object in the array
+          const updatedCurrent = {
+            ...current,
+            currentAmount: newAmount,
+            profit,
+            nextPay: 7, // Reset nextPay for the next week
+            weeks: updatedWeeks,
+            durationElapsed: updatedWeeks === totalWeeks,
+            profitCount
+          };
+
+          const docRef = doc(db, 'userCurrents', docSnap.id);
+          await updateDoc(docRef, {
+            currents: currents.map(c => (c.id === id ? updatedCurrent : c)),
+          });
+
+          await sendEmail(email, username, profit);
+          console.log(`Weekly email sent for user ${email}`);
+         }
+        } else {
+          // Decrement nextPay
+          const updatedCurrent = {
+            ...current,
+            nextPay: nextPay - 1,
+          };
+
+          const docRef = doc(db, 'userCurrents', docSnap.id);
+          await updateDoc(docRef, {
+            currents: currents.map(c => (c.id === id ? updatedCurrent : c)),
           });
 
           console.log(`Next pay day updated: ${nextPay - 1} days remaining for ${email}`);
         }
       }
-    });
+    }
   } catch (error) {
     console.error('Error running scheduleEmails:', error);
   }
 }
+
+               

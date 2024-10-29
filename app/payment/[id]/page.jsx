@@ -192,7 +192,7 @@ export default function page({params}) {
           )}
         </div>}
         {isUpld && <div className="w-full mt-5 flex flex-col max-sm:items-center">
-            <h1 className="text-sm max-sm:w-full max-sm:text-center">We are ensuring security and safe processes , please drop a screenshot of proof of payment</h1>
+            <h1 className="text-sm max-sm:w-full max-sm:text-center">4elevenfxtrade ensures a secure and safe payment process, please drop a screenshot as proof of payment</h1>
             <input onChange={handleUpload} type="file" id='upload' accept="image/*" className=" hidden"/>
             <label htmlFor="upload" className="flex justify-center items-center w-[300px] py-5 rounded-lg mt-5 border border-[#00eaff15] animate-pulse">
               <PiUploadFill className="text-5xl"/></label>

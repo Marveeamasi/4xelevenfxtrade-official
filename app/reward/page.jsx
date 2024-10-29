@@ -12,7 +12,7 @@ export default function page() {
     const {currentUser} = useContext(AuthContext) 
     if(!currentUser){ window.location.href = '/login' };
     const [loading , setLoading] = useState(false);
-    const [eligibleForWithdraw, setEligibleForWithdraw] = useState(true);
+    const [eligibleForWithdraw, setEligibleForWithdraw] = useState(false);
     const [rewardAmount, setRewardAmount] = useState(0);
     const [selectedOption, setSelectedOption] = useState('');
     const [address, setAddress] = useState("");

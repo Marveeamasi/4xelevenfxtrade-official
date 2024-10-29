@@ -14,13 +14,17 @@ export default function Sidebar({handleClick}) {
       ]
     
       const handleCallCron = async() => {
-        console.log('sending get request')
+        const reply = prompt('Enter "run cron" for confirmation');
+          if(reply === 'run cron'){
           try {
             const res = await axios.get('/api/schedule');
             alert('successfully sent a get request');
           } catch (error) {
             alert('Error sending get request:', error);
             throw error;
+          }
+          }else{
+              alert('cron process camcelled');
           }
       }
 

@@ -22,7 +22,7 @@ export default function page() {
     const id = Date.now()+Math.random().toString();
 
    useEffect(()=>{
-    if(!address || !selectedOption ||  !amount || rewardAmount<amount){
+    if(!address || !selectedOption ||  !amount || rewardAmount<amount || rewardAmount < 50){
       setEnablebtn(false);
     }else{
       setEnablebtn(true);
@@ -116,7 +116,7 @@ export default function page() {
       <div className='w-full'>
       <Topbar title={`${currentUser.displayName || ''}/ reward`}/>
       <div className='p-5 flex flex-col max-sm:items-center gap-5'>
-        <div className='w-full font-bold text-5xl max-sm:text-center'>${Math.round(rewardAmount * 100) / 100}</div>
+        <div className='w-full font-bold text-5xl max-sm:text-center'>${Math.round(rewardAmount * 100) / 100 || 0}</div>
         <div className='w-full rounded-lg p-5 bg-[#00eaff10] max-sm:text-center mt-5'>{eligibleForWithdraw ? `Your withdrawal will be received within 24 hours` : 'You must have up to $50 to withdraw' }</div>
       {eligibleForWithdraw && <div className='grid grid-cols-2 max-sm:grid-cols-1 w-full gap-5'>
         <input type="number" onChange={(e)=> setAmount(e.target.value)} placeholder='Enter amount' maxLength={16} className='bg-transparent outline-none placeholder:text-[#a2a1ab] p-3 border border-[#00eaff13] rounded-lg'/>

@@ -24,7 +24,7 @@ export default function Sidebar({handleClick}) {
             throw error;
           }
           }else{
-              alert('cron process camcelled');
+              alert('cron process cancelled');
           }
       }
 

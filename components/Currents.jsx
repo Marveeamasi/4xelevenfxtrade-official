@@ -48,7 +48,7 @@ export default function Currents({plan, initial, date, id, user, profit, current
       <h1 className='text-sm text=[#a2a1ab]'>{plan}</h1>
       <div className='text-[#eee] text-center'>{durationElapsed
           ? <div class="text-[#ffff00] animate-pulse">Completed</div>
-          : `+${rate}% in the next ${nextPay || 7} day(s)`}</div>
+          : `+${rate}% in the next ${nextPay} day(s)`}</div>
       <div className='flex flex-col justify-center items-center w-full gap-5'>
         <div className='flex items-center gap-2 flex-wrap w-full'>
           <CountUp start={0} end={currentAmount} duration={2} separator="," className='font-bold text-lg'/>

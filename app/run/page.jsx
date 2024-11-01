@@ -1,7 +1,7 @@
 'use client';
 import axios from 'axios';
 
-export default const page(){
+export default function page(){
   
   const handleCallCron = async() => {
         alert('sending get request');
@@ -18,5 +18,5 @@ export default const page(){
     <div className='flex justify-center items-center'>
      <button className='p-2 bg-col font-bold text-black hover:opacity-[.75]' onClick={handleCallCron}>Run Cron</button>
     </div>
-  );
-};
+  )
+}

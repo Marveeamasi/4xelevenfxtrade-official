@@ -1,22 +1,17 @@
-import { NextResponse } from 'next/server';
 import scheduleEmails from '@/utils/scheduleEmails';
 
-export async function GET() { 
-  
+export async function GET(request) {
+ try{
   const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${'LGi^X0266-obi*6~NBBo'}`) {
+  if (authHeader !== `Bearer ${'vee120!!!vee120!!!'}`) {
     return new Response('Unauthorized', {
       status: 401,
     });
   }
-  
-  try {
-    // Call the scheduling function
-    await scheduleEmails();
-
-    return NextResponse.json({ message: 'Scheduling emails executed successfully.' }, { status: 200 });
-  } catch (error) {
-    console.error('Error running scheduling job:', error);
-    return NextResponse.json({ message: 'Error running scheduling job.' }, { status: 500 });
-  }
+   await scheduleEmails();
+   return new Response('Successfully run schedule', {status: 200});
+ } catch (error){
+   console.error(error);
+   return new Response('Internal server error', {status: 500});
+ }
 }

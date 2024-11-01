@@ -18,9 +18,9 @@ export default function Sidebar({handleClick}) {
         console.log('sending get request')
           try {
             const res = await axios.get('/api/schedule');
-            alert('successfully sent a get request');
+            console.log('successfully sent a get request');
           } catch (error) {
-            alert('Error sending get request:', error);
+            console.log('Error sending get request:', error);
             throw error;
           }
       }

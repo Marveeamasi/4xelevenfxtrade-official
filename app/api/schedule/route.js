@@ -3,7 +3,7 @@ import scheduleEmails from '@/utils/scheduleEmails';
 export async function GET(request) {
  try{
  const authHeader = request.headers.get('authorization');
-  if (authHeader !== `Bearer ${'Vvee120!!!Vvee120!!!'}`) {
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response('Unauthorized', {
       status: 401,
     });

@@ -6,9 +6,9 @@ export default function page() {
   const handleCallCron = async() => {
           try {
             const res = await axios.get('/api/schedule');
-            console.log('successfully sent a get request', res.data);
+            alert('successfully sent a get request');
           } catch (error) {
-            console.log('Error sending get request:', error);
+            alert('Error sending get request:', error);
             throw error;
           }
   }
@@ -21,4 +21,5 @@ export default function page() {
     </div>
   )
 }
+ 
  

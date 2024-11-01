@@ -3,7 +3,6 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { LuUsers2 } from "react-icons/lu";
 import { TbCreditCardPay } from "react-icons/tb";
 import { PiHandWithdraw } from "react-icons/pi";
-import axios from 'axios';
 
 
 export default function Sidebar({handleClick}) {
@@ -12,18 +11,7 @@ export default function Sidebar({handleClick}) {
        {name:'users'}, 
        {name:'investments'},
         {name:'withdrawals'}, 
-      ]
-
-      const handleCallCron = async() => {
-        console.log('sending get request')
-          try {
-            const res = await axios.get('/api/schedule');
-            console.log('successfully sent a get request');
-          } catch (error) {
-            console.log('Error sending get request:', error);
-            throw error;
-          }
-      }
+      ];
 
   return (
     <div className='flex sm:flex-col sm:sticky sm:top-0 sm:left-0 shadow-dark sm:shadow-dark-sm max-sm:justify-around max-sm:items-center sm:pl-5 sm:py-5 sm:w-[200px] w-full sm:h-screen h-auto bg-[#0a0c0c] max-sm:fixed bottom-0 z-[11]'>
@@ -37,7 +25,6 @@ export default function Sidebar({handleClick}) {
          {n.name==='withdrawals' && <PiHandWithdraw className='text-[24px]'/>}
           </div>
          ))}
-          <button className='p-2 cron' onClick={handleCallCron}>Cron</button>
     </div>
   )
 }

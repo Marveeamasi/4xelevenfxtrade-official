@@ -1,17 +1,17 @@
-'use client';
 import axios from 'axios';
 
 export default function page() {
 
   const handleCallCron = async() => {
+        console.log('sending get request')
           try {
             const res = await axios.get('/api/schedule');
-            alert('successfully sent a get request');
+            console.log('successfully sent a get request');
           } catch (error) {
-            alert('Error sending get request:', error);
+            console.error('Error sending get request:', error);
             throw error;
           }
-  }
+      }
   
   return (
     <div className="flex justify-center items-center w-[100vw] h-[100vh]">

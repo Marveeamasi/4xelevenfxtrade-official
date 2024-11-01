@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import Dashboard from '@/adminwidgets/Dashboard';
 import Investments from '@/adminwidgets/Investments';
 import Sidebar from '@/adminwidgets/Sidebar';

@@ -1,8 +1,8 @@
 import scheduleEmails from '@/utils/scheduleEmails';
 
-export async function GET(req: Request) {
+export async function GET(request) {
  try{
-  const authHeader = req.headers.get('authorization');
+  const authHeader = request.headers.get('authorization');
   if (authHeader !== `Bearer ${'vee120!!!vee120!!!'}`) {
     return new Response('Unauthorized', {
       status: 401,

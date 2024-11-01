@@ -4,7 +4,7 @@ import Investments from '@/adminwidgets/Investments';
 import Sidebar from '@/adminwidgets/Sidebar';
 import Users from '@/adminwidgets/Users';
 import Withdrawals from '@/adminwidgets/Withdrawals';
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function page() {

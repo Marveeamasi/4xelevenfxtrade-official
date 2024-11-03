@@ -14,7 +14,6 @@ import { AuthContext } from '@/context/AuthContext';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/firebase';
 import Empty from '@/components/Empty';
-import Script from 'next/script';
 
 
 
@@ -158,22 +157,7 @@ export default function page() {
   
   return (
     <>
-        <Script
-        id="livechat-script"
-        strategy="lazyOnload" // Load the script lazily to avoid blocking the page load
-      >
-        {`
-          function add_chatinline(){
-            var hccid=37670133;
-            var nt=document.createElement("script");
-            nt.async=true;
-            nt.src="https://mylivechat.com/chatinline.aspx?hccid="+hccid;
-            var ct=document.getElementsByTagName("script")[0];
-            ct.parentNode.insertBefore(nt,ct);
-          }
-          add_chatinline();
-        `}
-      </Script>
+        
     <div className='flex w-full'>
       <Sidebar title={'dashboard'}/>
       <div className='w-full'>

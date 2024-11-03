@@ -74,22 +74,23 @@ export default function page() {
 
   return (
     <>
-    <Script
-        id="livechat-script"
-        strategy="lazyOnload" // Load the script lazily to avoid blocking the page load
-      >
-        {`
-          function add_chatinline(){
-            var hccid=37670133;
-            var nt=document.createElement("script");
-            nt.async=true;
-            nt.src="https://mylivechat.com/chatinline.aspx?hccid="+hccid;
-            var ct=document.getElementsByTagName("script")[0];
-            ct.parentNode.insertBefore(nt,ct);
-          }
-          add_chatinline();
-        `}
-      </Script>
+<Script
+        id="tawk-to-script"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+            (function(){
+              var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+              s1.async=true;
+              s1.src='https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb';
+              s1.charset='UTF-8';
+              s1.setAttribute('crossorigin','*');
+              s0.parentNode.insertBefore(s1,s0);
+            })();
+          `,
+        }}
+      />
       
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
     <Header/>

@@ -75,22 +75,27 @@ export default function page() {
   return (
     <>
 <Script
-        id="tawk-to-script"
-        strategy="afterInteractive"
+        id="tawkto"
+        strategy="lazyOnload"
+        src="https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb"
+        onLoad={() => {
+          console.log('Tawk.to script loaded');
+        }}
+        onError={(e) => {
+          console.error('Error loading Tawk.to script', e);
+        }}
+      />
+
+      <Script
+        id="tawkto-inline-script"
+        strategy="lazyOnload"
         dangerouslySetInnerHTML={{
           __html: `
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-            (function(){
-              var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-              s1.async=true;
-              s1.src='https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb';
-              s1.charset='UTF-8';
-              s1.setAttribute('crossorigin','*');
-              s0.parentNode.insertBefore(s1,s0);
-            })();
           `,
         }}
       />
+
       
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
     <Header/>

@@ -74,14 +74,14 @@ export default function page() {
 
   return (
     <>
-<Script
+ <Script
         src="https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb"
-        strategy="afterInteractive" 
-        async
-        charSet="UTF-8"
-        crossOrigin="*"
+        strategy="afterInteractive" // Ensures the script loads after the page is interactive
+        async={true} // Correct way to add async attribute
+        charSet="UTF-8" // Correct way to add charset
+        crossOrigin="anonymous" // Correct crossOrigin attribute (use 'anonymous' instead of '*')
         onLoad={() => {
-          console.log('Tawk.to has been so loaded successfully');
+          console.log('Tawk.to chat loaded successfully');
         }}
       />
 

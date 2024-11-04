@@ -75,28 +75,13 @@ export default function page() {
   return (
     <>
 <Script
-        id="tawkto"
-        strategy="lazyOnload"
         src="https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb"
+        strategy="afterInteractive"
         onLoad={() => {
-          console.log('Tawk.to script loaded');
-        }}
-        onError={(e) => {
-          console.error('Error loading Tawk.to script', e);
+          console.log('Tawk.to chat loaded successfully');
         }}
       />
 
-      <Script
-        id="tawkto-inline-script"
-        strategy="lazyOnload"
-        dangerouslySetInnerHTML={{
-          __html: `
-            var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-          `,
-        }}
-      />
-
-      
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
     <Header/>
     <div id='home'>

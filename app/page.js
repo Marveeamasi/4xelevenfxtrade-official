@@ -9,7 +9,6 @@ import Hero from '@/components/Hero'
 import HowItWorks from '@/components/HowItWorks'
 import Plans from '@/components/Plans'
 import Testimony from '@/components/Testimony'
-import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -74,16 +73,25 @@ export default function page() {
 
   return (
     <>
- <Script
-        src="https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb"
-        strategy="afterInteractive" // Ensures the script loads after the page is interactive
-        async={true} // Correct way to add async attribute
-        charSet="UTF-8" // Correct way to add charset
-        crossOrigin="anonymous" // Correct crossOrigin attribute (use 'anonymous' instead of '*')
-        onLoad={() => {
-          console.log('Tawk.to chat loaded successfully');
-        }}
-      />
+ useEffect(() => {
+    var Tawk_API = Tawk_API || {};
+    var Tawk_LoadStart = new Date();
+
+    var s1 = document.createElement('script');
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    
+    var s0 = document.getElementsByTagName('script')[0];
+    s0.parentNode.insertBefore(s1, s0);
+
+    return () => {
+      if (s1) {
+        s1.remove();
+      }
+    };
+  }, []);
 
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
     <Header/>

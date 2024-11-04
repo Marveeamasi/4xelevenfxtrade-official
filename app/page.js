@@ -76,9 +76,12 @@ export default function page() {
     <>
 <Script
         src="https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb"
-        strategy="afterInteractive"
+        strategy="afterInteractive" 
+        async
+        charSet="UTF-8"
+        crossOrigin="*"
         onLoad={() => {
-          console.log('Tawk.to chat loaded successfully');
+          console.log('Tawk.to has been so loaded successfully');
         }}
       />
 

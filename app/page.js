@@ -72,6 +72,7 @@ export default function page() {
   }, [data, notifications]);
 
    useEffect(() => {
+    // Injecting Tawk.to script with referrer policy set
     var Tawk_API = Tawk_API || {};
     var Tawk_LoadStart = new Date();
 
@@ -80,15 +81,10 @@ export default function page() {
     s1.src = 'https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb';
     s1.charset = 'UTF-8';
     s1.setAttribute('crossorigin', '*');
-    
+    s1.referrerPolicy = 'no-referrer-when-downgrade'; 
+
     var s0 = document.getElementsByTagName('script')[0];
     s0.parentNode.insertBefore(s1, s0);
-
-    return () => {
-      if (s1) {
-        s1.remove();
-      }
-    };
   }, []);
 
   return (

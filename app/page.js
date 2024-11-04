@@ -71,9 +71,7 @@ export default function page() {
     return () => clearInterval(intervalId);
   }, [data, notifications]);
 
-  return (
-    <>
- useEffect(() => {
+   useEffect(() => {
     var Tawk_API = Tawk_API || {};
     var Tawk_LoadStart = new Date();
 
@@ -93,6 +91,8 @@ export default function page() {
     };
   }, []);
 
+  return (
+    <>
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
     <Header/>
     <div id='home'>

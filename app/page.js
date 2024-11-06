@@ -12,6 +12,7 @@ import Testimony from '@/components/Testimony'
 import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 export default function page() {
   const [data, setData] = useState([]);
@@ -71,22 +72,6 @@ export default function page() {
     return () => clearInterval(intervalId);
   }, [data, notifications]);
 
-   useEffect(() => {
-    // Injecting Tawk.to script with referrer policy set
-    var Tawk_API = Tawk_API || {};
-    var Tawk_LoadStart = new Date();
-
-    var s1 = document.createElement('script');
-    s1.async = true;
-    s1.src = 'https://embed.tawk.to/6727b7c34304e3196adc9587/1ibpibljb';
-    s1.charset = 'UTF-8';
-    s1.setAttribute('crossorigin', '*');
-    s1.referrerPolicy = 'no-referrer-when-downgrade'; 
-
-    var s0 = document.getElementsByTagName('script')[0];
-    s0.parentNode.insertBefore(s1, s0);
-  }, []);
-
   return (
     <>
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
@@ -109,6 +94,7 @@ export default function page() {
     </div>
     <Footer/>
     <ToastContainer />
+    <TawkMessengerReact propertyId="6727b7c34304e3196adc9587" widgetId="1ibpibljb"/>
     </div>
     </>
   )

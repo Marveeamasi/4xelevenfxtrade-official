@@ -94,7 +94,7 @@ export default function page() {
     </div>
     <Footer/>
     <ToastContainer />
-    <TawkMessengerReact propertyId="6727b7c34304e3196adc9587" widgetId="1ibpibljb"/>
+    <TawkMessengerReact propertyId="672b798e4304e3196addf0db" widgetId="1ic0t5uqf"/>
     </div>
     </>
   )

@@ -72,6 +72,10 @@ export default function page() {
     return () => clearInterval(intervalId);
   }, [data, notifications]);
 
+  const onLoad = () => {
+        console.log('onLoad works!');
+    };
+
   return (
     <>
     <div className='bg-contain bg-no-repeat' style={{backgroundImage: `url('background2.webp')`}}>
@@ -94,7 +98,7 @@ export default function page() {
     </div>
     <Footer/>
     <ToastContainer />
-    <TawkMessengerReact propertyId="672b798e4304e3196addf0db" widgetId="1ic0t5uqf"/>
+    <TawkMessengerReact propertyId="672b798e4304e3196addf0db" widgetId="1ic0t5uqf" onLoad={onLoad}/>
     </div>
     </>
   )

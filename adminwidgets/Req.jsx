@@ -38,8 +38,8 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
 
     const templateParamsForAccept = {
       from_name: '4Elevenfxtrade',
-      reply_to: 'info@4xeleventrade.store',
-      to_email: user? user : 'amasimarvellous@gmail.com',
+      reply_to: 'info@4xeleventrade.com',
+      to_email: user,
       page_to: 'dashboard',
     type: 'notification from 4Elevenfxtrade',
       message: `Hi ${username || 'dear'}, your payment of ${amount} has been approved successfully, now your money grows weekly`,
@@ -47,11 +47,11 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
   
     const templateParamsForReject = {
       from_name: '4Elevenfxtrade',
-      reply_to: 'info@4xeleventrade.store',
-      to_email: user? user : 'amasimarvellous@gmail.com',
+      reply_to: 'info@4xeleventrade.com',
+      to_email: user,
       page_to: 'dashboard',
       type: 'notification from 4Elevenfxtrade',
-      message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: info@4xeleventrade.store`,
+      message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: info@4xeleventrade.com`,
     };
 
     const selectedData = {

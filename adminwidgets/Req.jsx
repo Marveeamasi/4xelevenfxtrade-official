@@ -87,7 +87,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
     try {
       await updateDoc(requestRef, { requests: updatedRequests });
       await emailjs.send(
-        'service_ao75urn',
+        'service_s13fw7v',
       'template_tdpbxb7', 
       templateParamsForReject,
       'MIRKY7yUv_4VJdUdi' 
@@ -141,7 +141,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
         })
       });
       await emailjs.send(
-        'service_ao75urn',
+        'service_s13fw7v',
       'template_tdpbxb7', 
       templateParamsForAccept,
       'MIRKY7yUv_4VJdUdi' 

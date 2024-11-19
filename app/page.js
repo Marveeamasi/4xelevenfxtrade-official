@@ -12,12 +12,20 @@ import Testimony from '@/components/Testimony'
 import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
+import Intercom from '@/components/Intercom';
+
 
 export default function page() {
   const [data, setData] = useState([]);
   const [notifications, setNotifications] = useState([]);
 
+  const user = {
+    id: new Date(),
+    name: 'John Doe',
+    email: 'johndoe@example.com',
+    createdAt: Math.floor(new Date('2024-01-01').getTime() / 1000), // Replace with actual user creation timestamp
+  };
+  
   function generateRandomWalletAddress() {
     return '0x' + Math.floor(Math.random() * 16777215).toString(16);
   }
@@ -98,7 +106,7 @@ export default function page() {
     </div>
     <Footer/>
     <ToastContainer />
-    <TawkMessengerReact propertyId="672b798e4304e3196addf0db" widgetId="1ic0t5uqf" onLoad={onLoad}/>
+  <Intercom user={user} />
     </div>
     </>
   )

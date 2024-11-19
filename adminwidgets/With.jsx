@@ -58,20 +58,20 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
 
     const templateParamsForAccept = {
         from_name: '4Elevenfxtrade',
-        reply_to: 'info@4xeleventrade.store',
-        to_email: user? user : 'amasimarvellous@gmail.com',
+        reply_to: 'info@4xeleventrade.com',
+        to_email: user,
         page_to: 'dashboard',
         type: 'notification from 4Elevenfxtrade',
-        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: info@4xeleventrade.store`, 
+        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: info@4xeleventrade.com`, 
     };
   
     const templateParamsForReject = {
       from_name: '4Elevenfxtrade',
-        reply_to: 'info@4xeleventrade.store',
-        to_email: user? user : 'amasimarvellous@gmail.com',
+        reply_to: 'info@4xeleventrade.com',
+        to_email: user,
         page_to: 'dashboard',
         type: 'notification from 4Elevenfxtrade',
-        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} failed, please contact our customer service: info@4xeleventrade.store`, 
+        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} failed, please contact our customer service: info@4xeleventrade.com`, 
      };
   
     const handleReject = async () => {
@@ -104,7 +104,7 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
       // Send email
       try {
         await emailjs.send(
-          'service_ao75urn',
+          'service_s13fw7v',
         'template_tdpbxb7', 
         templateParamsForReject,
         'MIRKY7yUv_4VJdUdi' 
@@ -192,7 +192,7 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
       // Send approval email
       try {
         await emailjs.send(
-          'service_ao75urn',
+          'service_s13fw7v',
           'template_tdpbxb7',
           templateParamsForAccept,
           'MIRKY7yUv_4VJdUdi'

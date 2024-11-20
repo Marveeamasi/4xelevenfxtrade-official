@@ -21,9 +21,9 @@ export default function page() {
 
   const user = {
     id: new Date(),
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    createdAt: Math.floor(new Date('2024-01-01').getTime() / 1000), // Replace with actual user creation timestamp
+    name: 'dear',
+    email: 'amasimarvellous@gmail.com',
+    createdAt: Math.floor(new Date('2024-01-01').getTime() / 1000),
   };
   
   function generateRandomWalletAddress() {

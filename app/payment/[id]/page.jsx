@@ -95,7 +95,7 @@ export default function page({params}) {
       };
     
       emailjs.send(
-        'service_s13fw7v',
+        'service_vir7ajr',
         'template_tdpbxb7', 
         templateParams,
         'MIRKY7yUv_4VJdUdi' 

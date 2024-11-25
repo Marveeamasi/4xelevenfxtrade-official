@@ -4,22 +4,17 @@ import nodemailer from 'nodemailer';
 
 // Create transporter for sending emails
 const transporter = nodemailer.createTransport({
-  host: 'smtp.rbx117.truehost.cloud',
-  port: 587,
-  secure: false,
-  auth: {
-    user: 'info@4xeleventrade.com',
-    pass: 'Qaz1wsx2,.$$'
+  service: 'gmail',
+  auth:{
+    user: '4xelevenfxtrade@gmail.com',
+    pass:'dqtg isjh yjdo fdyi',
   },
-  tls: {
-    rejectUnauthorized: false
-  }
 });
 
 // Email sending logic using Nodemailer
 async function sendEmail(email, username, profit) {
   const mailOptions = {
-    from: 'info@4xeleventrade.com',
+    from: '4xelevenfxtrade@gmail.com',
     to: email,
     subject: 'Weekly Profit Notification',
     text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,

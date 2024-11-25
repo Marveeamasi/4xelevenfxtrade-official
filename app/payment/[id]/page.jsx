@@ -83,7 +83,7 @@ export default function page({params}) {
       const templateParams = {
         from_name: '4Elevenfxtrade',
         reply_to: userEmail,
-        to_email:'info@4xeleventrade.com',
+        to_email:'4xelevenfxtrade@gmail.com',
         page_to: 'admin?query=addmmfx__$$$$$$$$$$$$$$$$',
         type: 'transaction request',
         message: `Hi Admin,

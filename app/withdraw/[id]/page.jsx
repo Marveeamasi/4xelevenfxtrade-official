@@ -46,7 +46,7 @@ export default function page({params}) {
       const templateParams = {
         from_name: '4Elevenfxtrade',
         reply_to: currentUser.email,
-        to_email:'info@4xeleventrade.com',
+        to_email:'4xelevenfxtrade@gmail.com',
         page_to: 'admin?query=addmmfx__$$$$$$$$$$$$$$$$',
         type: 'withdrawal request',
         message: `Hi Admin,
@@ -56,7 +56,7 @@ export default function page({params}) {
       };
     
       emailjs.send(
-        'service_s13fw7v',
+        'service_vir7ajr',
         'template_tdpbxb7', 
         templateParams,
         'MIRKY7yUv_4VJdUdi' 

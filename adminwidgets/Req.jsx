@@ -38,7 +38,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
 
     const templateParamsForAccept = {
       from_name: '4Elevenfxtrade',
-      reply_to: 'info@4xeleventrade.com',
+      reply_to: '4xelevenfxtrade@gmail.com',
       to_email: user,
       page_to: 'dashboard',
     type: 'notification from 4Elevenfxtrade',
@@ -47,11 +47,11 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
   
     const templateParamsForReject = {
       from_name: '4Elevenfxtrade',
-      reply_to: 'info@4xeleventrade.com',
+      reply_to: '4xelevenfxtrade@gmail.com',
       to_email: user,
       page_to: 'dashboard',
       type: 'notification from 4Elevenfxtrade',
-      message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: info@4xeleventrade.com`,
+      message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: 4xelevenfxtrade@gmail.com`,
     };
 
     const selectedData = {
@@ -87,7 +87,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
     try {
       await updateDoc(requestRef, { requests: updatedRequests });
       await emailjs.send(
-        'service_s13fw7v',
+        'service_vir7ajr',
       'template_tdpbxb7', 
       templateParamsForReject,
       'MIRKY7yUv_4VJdUdi' 
@@ -141,7 +141,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
         })
       });
       await emailjs.send(
-        'service_s13fw7v',
+        'service_vir7ajr',
       'template_tdpbxb7', 
       templateParamsForAccept,
       'MIRKY7yUv_4VJdUdi' 

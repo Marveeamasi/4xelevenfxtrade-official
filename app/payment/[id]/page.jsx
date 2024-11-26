@@ -91,26 +91,19 @@ export default function page({params}) {
     
     async function sendScreenshotNotification(planName, username, userEmail, screenshotURL, requestId, amount) {
       setLoading(true)
-      const templateParams = {
-        from_name: '4Elevenfxtrade',
-        reply_to: userEmail,
-        to_email:'4xelevenfxtrade@gmail.com',
-        page_to: 'admin?query=addmmfx__$$$$$$$$$$$$$$$$',
-        type: 'transaction request',
-        message: `Hi Admin,
-        amount: ${amount},
-        user: ${username}
-        email: ${userEmail}
-        screenshotURL: ${screenshotURL}
-        plan: ${planName}`, 
-      };
-    
       await sendEmail({
-            to_email: user,
-            subject: '4Elevenfxtrade: Transaction rqu',
-            message: `Hi ${username || 'dear'}, your payment of ${amount} failed. Please contact customer service: 4xelevenfxtrade@gmail.com.`,
+            to_email: userEmail,
+            subject: '4Elevenfxtrade: Transaction request',
+            message: `Hi Admin,
+            amount: ${amount},
+            user: ${username}
+            email: ${userEmail}
+            screenshotURL: ${screenshotURL}
+            plan: ${planName}.
+            Visit https://www.4xeleventrade.com/admin for more information.
+        `,
         })
-
+        
         .then(async() => {
           await updateDoc(doc(db,'userTransactions',currentUser.uid),{
             requests: arrayUnion({

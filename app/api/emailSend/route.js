@@ -14,18 +14,17 @@ export default async function handler(req, res) {
     try {
         // Create a transporter
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com', // Use your email provider's SMTP server
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: process.env.EMAIL_USER, // Your email
-                pass: process.env.EMAIL_PASS, // Your email password or app password
-            },
-        });
+  service: 'gmail',
+  auth:{
+    user: '4xelevenfxtrade@gmail.com',
+    pass: 'dqtg isjh yjdo fdyi',
+  },
+});
+
 
         // Email options
         const mailOptions = {
-            from: '"4Elevenfxtrade" <your-email@gmail.com>', // Sender address
+            from: '4xelevenfxtrade@gmail.com', // Sender address
             to: to_email, // List of receivers
             subject: subject, // Subject line
             text: message, // Plain text body

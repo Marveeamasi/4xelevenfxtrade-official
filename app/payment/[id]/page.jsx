@@ -34,6 +34,17 @@ export default function page({params}) {
       {name: 'retirement', rate:'20% Weekly'},
     ]
 
+  const sendEmail = async (emailData) => {
+    try {
+        const response = await axios.post('/api/emailRecieve', emailData);
+        console.log(response.data.message || 'Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        console.log('Failed to send email. Please try again.');
+    }
+};
+  
+
     useEffect(()=>{
       const fetchRefId = async()=> {
         try{
@@ -94,12 +105,12 @@ export default function page({params}) {
         plan: ${planName}`, 
       };
     
-      emailjs.send(
-        'service_vir7ajr',
-        'template_tdpbxb7', 
-        templateParams,
-        'MIRKY7yUv_4VJdUdi' 
-      )
+      await sendEmail({
+            to_email: user,
+            subject: '4Elevenfxtrade: Transaction rqu',
+            message: `Hi ${username || 'dear'}, your payment of ${amount} failed. Please contact customer service: 4xelevenfxtrade@gmail.com.`,
+        })
+
         .then(async() => {
           await updateDoc(doc(db,'userTransactions',currentUser.uid),{
             requests: arrayUnion({

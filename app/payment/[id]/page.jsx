@@ -6,8 +6,8 @@ import { db, storage } from "@/firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useContext, useEffect, useState } from "react";
 import { IoCopy } from "react-icons/io5";
-import { PiUploadFill } from "react-icons/pi";;
-import emailjs from '@emailjs/browser';
+import { PiUploadFill } from "react-icons/pi";
+import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { arrayUnion, doc, getDoc, Timestamp, updateDoc } from "firebase/firestore";
 

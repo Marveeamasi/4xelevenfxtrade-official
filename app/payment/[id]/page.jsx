@@ -36,7 +36,11 @@ export default function page({params}) {
 
   const sendEmail = async (emailData) => {
     try {
-        const response = await axios.post('/api/emailRecieve', emailData);
+        const response = await axios.post('/api/emailRecieve', emailData, {
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
         console.log(response.data.message || 'Email sent successfully');
     } catch (error) {
         console.error('Error sending email:', error);

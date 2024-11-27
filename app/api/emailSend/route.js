@@ -1,17 +1,17 @@
 import nodemailer from 'nodemailer';
 
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method not allowed' });
-    }
-
-    const { to_email, subject, message } = req.body;
-
-    if (!to_email || !subject || !message) {
-        return res.status(400).json({ message: 'Missing required fields' });
-    }
-
+export async function POST(req) {
     try {
+        const body = await req.json(); // Parse JSON body
+        const { to_email, subject, message } = body;
+
+        if (!to_email || !subject || !message) {
+            return new Response(
+                JSON.stringify({ message: 'Missing required fields' }),
+                { status: 400 }
+            );
+        }
+
         // Create a transporter
         const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -22,21 +22,24 @@ export default async function handler(req, res) {
 });
 
 
-        // Email options
         const mailOptions = {
-            from: '4xelevenfxtrade@gmail.com', // Sender address
-            to: to_email, // List of receivers
-            subject: subject, // Subject line
-            text: message, // Plain text body
+            from: '4xelevenfxtrade@gmail.com',
+            to: to_email,
+            subject: subject,
+            text: message,
         };
 
-        // Send email
         await transporter.sendMail(mailOptions);
 
-        res.status(200).json({ message: 'Email sent successfully' });
+        return new Response(
+            JSON.stringify({ message: 'Email sent successfully' }),
+            { status: 200 }
+        );
     } catch (error) {
         console.error('Error sending email:', error);
-        res.status(500).json({ message: 'Error sending email', error });
+        return new Response(
+            JSON.stringify({ message: 'Error sending email', error }),
+            { status: 500 }
+        );
     }
-              }
-          
+}

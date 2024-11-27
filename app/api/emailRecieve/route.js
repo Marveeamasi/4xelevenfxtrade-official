@@ -23,8 +23,8 @@ export async function POST(req) {
 
 
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: to_email,
+            from: to_email,
+            to: '4xelevenfxtrade@gmail.com',
             subject: subject,
             text: message,
         };

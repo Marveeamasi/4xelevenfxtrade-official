@@ -190,7 +190,7 @@ Sent via Emailjs.
         await sendEmail({
             to_email: user,
             subject: '4Elevenfxtrade: Withdrawal request validation',
-            message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: 4xelevenfxtrade@gmail.com . Visit https://www.4xeleventrade.com/dashboard for more information.
+            message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: 4xelevenfxtrade@gmail.com. Visit your admin dashboard for more information.
 
 
 

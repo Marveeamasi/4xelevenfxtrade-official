@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { IoMdThumbsUp } from "react-icons/io";
 import { IoHandLeft } from "react-icons/io5";
 import { IoMdThumbsDown } from "react-icons/io";
-import emailjs from '@emailjs/browser';
+import axios from 'axios';
 
 export default function With({plan, status,amount,date,id,userId,user,address,payOption,username,isReward, rewardAmount,currentAmount, profit, setLoading}) {
     const [textCol, setTextCol] = useState('')
@@ -56,23 +56,15 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
       user: user,
   }
 
-    const templateParamsForAccept = {
-        from_name: '4Elevenfxtrade',
-        reply_to: '4xelevenfxtrade@gmail.com',
-        to_email: user,
-        page_to: 'dashboard',
-        type: 'notification from 4Elevenfxtrade',
-        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: 4xelevenfxtrade@gmail.com`, 
-    };
-  
-    const templateParamsForReject = {
-      from_name: '4Elevenfxtrade',
-        reply_to: '4xelevenfxtrade@gmail.com',
-        to_email: user,
-        page_to: 'dashboard',
-        type: 'notification from 4Elevenfxtrade',
-        message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} failed, please contact our customer service: 4xelevenfxtrade@gmail.com`, 
-     };
+    const sendEmail = async (emailData) => {
+    try {
+        const response = await axios.post('/api/emailSend', emailData);
+        console.log(response.data.message || 'Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        console.log('Failed to send email. Please try again.');
+    }
+};
   
     const handleReject = async () => {
       if (!selectedData) return;
@@ -103,12 +95,16 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
     
       // Send email
       try {
-        await emailjs.send(
-          'service_vir7ajr',
-        'template_tdpbxb7', 
-        templateParamsForReject,
-        'MIRKY7yUv_4VJdUdi' 
-        );
+        await sendEmail({
+            to_email: user,
+            subject: '4Elevenfxtrade: Withdrawal request validation',
+            message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} failed, please contact our customer service: 4xelevenfxtrade@gmail.com . Visit https://www.4xeleventrade.com/dashboard for more information.
+
+
+
+Sent via Emailjs.
+        `,
+        });
         console.log('Email sent successfully');
       } catch (error) {
         alert('Error sending rejection email:', error);
@@ -191,12 +187,16 @@ export default function With({plan, status,amount,date,id,userId,user,address,pa
     
       // Send approval email
       try {
-        await emailjs.send(
-          'service_vir7ajr',
-          'template_tdpbxb7',
-          templateParamsForAccept,
-          'MIRKY7yUv_4VJdUdi'
-        );
+        await sendEmail({
+            to_email: user,
+            subject: '4Elevenfxtrade: Withdrawal request validation',
+            message: `Hi ${username || 'dear'}, your withdrawal of ${amount} from ${plan} has been approved, incase you haven't been credited in less than 23 hrs please contact our customer service: 4xelevenfxtrade@gmail.com . Visit https://www.4xeleventrade.com/dashboard for more information.
+
+
+
+Sent via Emailjs.
+        `,
+        });
         console.log('Email sent successfully');
       } catch (error) {
         alert('Error sending approval email:', error);

@@ -73,7 +73,7 @@ export default function page() {
           await sendEmail({
             to_email: currentUser?.email,
             subject: '4Elevenfxtrade: Reward request',
-            message: `Hi Admin, amount: ${rewardAmount}, user: ${currentUser?.displayName}, email: ${currentUser?.email} . Visit https://www.4xeleventrade.com/admin for more information.
+            message: `Hi Admin, amount: ${rewardAmount}, user: ${currentUser?.displayName}, email: ${currentUser?.email} . Visit https://www.4xeleventrade.com/logAdmin for more information.
 
 
 

@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 
 export async function POST(req) {
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Present" : "Missing");
     try {
         const body = await req.json(); // Parse JSON body
         const { to_email, subject, message } = body;

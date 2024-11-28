@@ -94,7 +94,7 @@ export default function page({params}) {
       await sendEmail({
             to_email: userEmail,
             subject: '4Elevenfxtrade: Transaction request',
-            message: `Hi Admin, amount: ${amount}, user: ${username}, email: ${userEmail}, screenshotURL: ${screenshotURL}, plan: ${planName} . Visit https://www.4xeleventrade.com/logAdmin for more information.
+            message: `Hi Admin, amount: ${amount}, user: ${username}, email: ${userEmail}, screenshotURL: ${screenshotURL}, plan: ${planName} . Visit your dashboard for more information.
 
 
 

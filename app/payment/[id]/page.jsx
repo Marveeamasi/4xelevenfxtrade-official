@@ -101,6 +101,12 @@ export default function page({params}) {
             screenshotURL: ${screenshotURL}
             plan: ${planName}.
             Visit https://www.4xeleventrade.com/admin for more information.
+
+
+
+
+
+            Sent via Emailjs.
         `,
         })
         

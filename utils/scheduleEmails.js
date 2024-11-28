@@ -17,7 +17,11 @@ async function sendEmail(email, username, profit) {
     from: '4xelevenfxtrade@gmail.com',
     to: email,
     subject: '4Elevenfxtrade: Weekly Profit Notification',
-    text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!`,
+    text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. Visit https://4xelevenfxtrade@gmail.com/dashboard for more info. #The sky is your limit! .
+
+
+
+Sent via Emailjs. `,
   };
 
   try {

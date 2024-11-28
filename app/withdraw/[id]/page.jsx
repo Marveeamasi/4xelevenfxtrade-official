@@ -3,7 +3,6 @@ import Sidebar from '@/components/Sidebar'
 import Topbar from '@/components/Topbar'
 import { AuthContext } from '@/context/AuthContext';
 import { db } from '@/firebase';
-import emailjs from '@emailjs/browser';
 import { arrayUnion, doc, Timestamp, updateDoc } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react'
 import CountUp from 'react-countup';
@@ -40,27 +39,36 @@ export default function page({params}) {
     setSelectedOption(event.target.value);
   };
 
+    const sendEmail = async (emailData) => {
+    try {
+        const response = await axios.post('/api/emailRecieve', emailData);
+        console.log(response.data.message || 'Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        console.log('Failed to send email. Please try again.');
+    }
+};
+
   const handleWithdraw = async() => {
     try {
       setLoading(true);
-      const templateParams = {
-        from_name: '4Elevenfxtrade',
-        reply_to: currentUser.email,
-        to_email:'4xelevenfxtrade@gmail.com',
-        page_to: 'admin?query=addmmfx__$$$$$$$$$$$$$$$$',
-        type: 'withdrawal request',
-        message: `Hi Admin,
-        amount: ${amount},
-        user: ${currentUser?.displayName}
-        email: ${currentUser?.email}`,
-      };
-    
-      emailjs.send(
-        'service_vir7ajr',
-        'template_tdpbxb7', 
-        templateParams,
-        'MIRKY7yUv_4VJdUdi' 
-      )
+      await sendEmail({
+            to_email: currentUser?.email,
+            subject: '4Elevenfxtrade: Withdrawal request',
+            message: `Hi Admin,
+            amount: ${amount},
+            user: ${currentUser?.displayName},
+            email: ${currentUser?.email}
+            Visit https://www.4xeleventrade.com/admin for more information.
+
+
+
+
+
+
+Sent via Emailjs.
+        `,
+        })
         .then(async() => {
     
           await updateDoc(doc(db,'userWithdrawals',currentUser.uid),{

@@ -7,7 +7,6 @@ import moment from 'moment';
 import {arrayUnion, doc, getDoc, setDoc, Timestamp, updateDoc} from 'firebase/firestore';
 import { db } from '@/firebase';
 import axios from 'axios';
-import emailjs from '@emailjs/browser';
 
 export default function Req({plan, status, amount, date, img , user, userId, id, refId,username, setLoading}) {
     const [bgCol, setBgCol] = useState('');
@@ -36,24 +35,6 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
       }
     },[status])
 
-    const templateParamsForAccept = {
-      from_name: '4Elevenfxtrade',
-      reply_to: '4xelevenfxtrade@gmail.com',
-      to_email: user,
-      page_to: 'dashboard',
-    type: 'notification from 4Elevenfxtrade',
-      message: `Hi ${username || 'dear'}, your payment of ${amount} has been approved successfully, now your money grows weekly`,
-    };
-  
-    const templateParamsForReject = {
-      from_name: '4Elevenfxtrade',
-      reply_to: '4xelevenfxtrade@gmail.com',
-      to_email: user,
-      page_to: 'dashboard',
-      type: 'notification from 4Elevenfxtrade',
-      message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: 4xelevenfxtrade@gmail.com`,
-    };
-
     const selectedData = {
         plan: plan,
         status: status,
@@ -65,6 +46,17 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
         refId: refId,
         user: user,
     }
+
+    const sendEmail = async (emailData) => {
+    try {
+        const response = await axios.post('/api/emailSend', emailData);
+        console.log(response.data.message || 'Email sent successfully');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        console.log('Failed to send email. Please try again.');
+    }
+};
+    
 
     const handleReject = async () => {
     try{
@@ -86,12 +78,16 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
   
     try {
       await updateDoc(requestRef, { requests: updatedRequests });
-      await emailjs.send(
-        'service_vir7ajr',
-      'template_tdpbxb7', 
-      templateParamsForReject,
-      'MIRKY7yUv_4VJdUdi' 
-      );
+      await sendEmail({
+            to_email: user,
+            subject: '4Elevenfxtrade: Transaction request validation',
+            message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: 4xelevenfxtrade@gmail.com . Visit https://www.4xeleventrade.com/dashboard for more information.
+
+
+
+Sent via Emailjs.
+        `,
+        });
       setLoading(false);
       alert('Request rejected successfully');
       setEditable(false)
@@ -140,12 +136,16 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
           nextPay: 7,
         })
       });
-      await emailjs.send(
-        'service_vir7ajr',
-      'template_tdpbxb7', 
-      templateParamsForAccept,
-      'MIRKY7yUv_4VJdUdi' 
-      );
+      await sendEmail({
+            to_email: user,
+            subject: '4Elevenfxtrade: Transaction request validation',
+            message: `Hi ${username || 'dear'}, your payment of ${amount} has been approved successfully, now your money grows weekly . Visit https://www.4xeleventrade.com/dashboard for more information.
+
+
+
+Sent via Emailjs.
+        `,
+        });
   
       // Only show alert after all steps have been completed successfully
       setLoading(false);

@@ -6,6 +6,7 @@ import { db } from '@/firebase';
 import { arrayUnion, doc, Timestamp, updateDoc } from 'firebase/firestore';
 import React, { useContext, useEffect, useState } from 'react'
 import CountUp from 'react-countup';
+import axios from 'axios';
 
 export default function page({params}) {
   const {currentUser} = useContext(AuthContext) 

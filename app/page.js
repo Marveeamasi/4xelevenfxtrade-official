@@ -12,19 +12,12 @@ import Testimony from '@/components/Testimony'
 import { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Intercom from '@/components/Intercom';
+import SmartsuppChat from '@/components/SmartsuppChat';
 
 
 export default function page() {
   const [data, setData] = useState([]);
   const [notifications, setNotifications] = useState([]);
-
-  const user = {
-    id: new Date(),
-    name: 'dear',
-    email: 'amasimarvellous@gmail.com',
-    createdAt: Math.floor(new Date('2024-01-01').getTime() / 1000),
-  };
   
   function generateRandomWalletAddress() {
     return '0x' + Math.floor(Math.random() * 16777215).toString(16);
@@ -106,7 +99,7 @@ export default function page() {
     </div>
     <Footer/>
     <ToastContainer />
-  <Intercom user={user} />
+  <SmartsuppChat />
     </div>
     </>
   )

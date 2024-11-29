@@ -10,7 +10,7 @@ export default function ContactUs() {
   const [message, setMessage] = useState("");
 
   function sendEmail() {
-    var mailtoLink = "mailto:" + "info@4xeleventrade.store" + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message+` COMING FROM ${fullname}, ${email}, ${phone}`);
+    var mailtoLink = "mailto:" + "info@4xeleventrade.com" + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(message+` COMING FROM ${fullname}, ${email}, ${phone}`);
     window.location.href = mailtoLink;
 }
 

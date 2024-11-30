@@ -11,7 +11,7 @@ export default function Navbar() {
     <div className='sm:flex sm:justify-between sm:p-4 sm:pl-0 sm:items-center sm:flex-[2] max-sm:w-full'>
       <Link href={'/'} className='sm:flex hidden gap-3 items-center'>
         <img src="logo.png" alt="logo" className='w-6 lg:w-8 h-auto rounded-full logo-glow' />
-        <span className='text-2xlg font-[900]'>4Elevenfxtrade</span>
+        <span className='text-2xlg font-[900]'>4xeleventrade</span>
       </Link>
     <div className='flex justify-end items-center gap-4 max-sm:justify-between max-sm:w-full'>
        <MenuItems title='Home' Icon={AiFillHome} name={`#home`}/>

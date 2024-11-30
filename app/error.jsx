@@ -6,10 +6,10 @@ export default function error({error, reset}) {
   const text = [
     `Get instant withdraw from referal rewards.`,
      `Invest, and see you money grow weekly.`,
-      `4Elevenfxtrade'S payment method is much safer and reliable.`, 
+      `4xeleventrade's payment method is much safer and reliable.`, 
       `Users' privacy and information is encrypted.`,
-       `4Elevenfxtrade fully built to assist and develop your assets to the best it can.`,
-     `4Elevenfxtrade'S resourses covers everyone, students, workers, retired, etc.`,
+       `4xeleventrade fully built to assist and develop your assets to the best it can.`,
+     `4xeleventrade's resourses covers everyone, students, workers, retired, etc.`,
     `Ready to help the best we can, providing quality services`]
     useEffect(()=>{
         console.log(error)

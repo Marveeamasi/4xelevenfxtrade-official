@@ -48,7 +48,7 @@ export default function Footer() {
   </div>
     </div>
     <div className='w-full flex sm:justify-between p-10 max-sm:flex-col-reverse max-sm:gap-5 max-sm:items-center'>
-    <div className=' text-[11px] text-[#a2a1ab]'>© 2024 4xelevenfxtrade.com All Rights Reserved</div>
+    <div className=' text-[11px] text-[#a2a1ab]'>© 2024 4xeleventrade.com All Rights Reserved</div>
     <div className='flex items-center gap-1 text-[11px]'><a href="#" className='font-extralight hover:font-bold'>Terms & Condition</a> || <a href="" className='font-extralight hover:font-bold'>Privacy Policy</a></div>
     </div>
     </div>

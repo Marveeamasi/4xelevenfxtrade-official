@@ -8,7 +8,7 @@ export default function Count() {
   
   return (
     <div className='flex flex-col max-sm:justify-center max-sm:items-center w-full bg-[#121516ef] p-4 sm:p-20 mt-10 gap-5'>
-      <div className=''>The 4Elevenfxtrade</div>
+      <div className=''>The 4xeleventrade</div>
       <h1 className='text-col text-3xl'>Awesome Facts</h1>
       <hr className='w-10 bg-col h-1'/>
       <div className='flex flex-wrap items-center max-sm:flex-col max-sm:justify-center gap-10 max-sm:gap-20 max-sm:mt-10'>

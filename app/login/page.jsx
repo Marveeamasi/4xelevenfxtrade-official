@@ -110,7 +110,7 @@ const handlePassChange = (event) => {
     <div className='h-screen w-full relative bg-cover bg-no-repeat flex flex-col justify-center items-center max-sm:justify-end sm:p-10 bg-blend-darken bg-[#000000b0]' style={{backgroundImage: `url('about2.jpg')`}}>
        <Link href={'/'} className='flex gap-3 items-center justify-center absolute top-5'>
         <img src="logo.png" alt="logo" className='w-10 h-auto rounded-full logo-glow' />
-        <span className='font-[900] text-2xl text-[#eee]'>4Elevenfxtrade</span>
+        <span className='font-[900] text-2xl text-[#eee]'>4xeleventrade</span>
       </Link>
 
       <div className='w-full sm:w-[500px] sm:rounded-lg max-sm:rounded-[30px] grid grid-cols-1 max-sm:rounded-bl-none max-sm:rounded-br-none bg-[#000000ee] p-10 gap-5'>

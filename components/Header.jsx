@@ -22,7 +22,7 @@ export default function Header() {
       <div className='flex gap-3 items-center sm:justify-end justify-between max-sm:w-full max-sm:justify-between flex-[1]'>
       <Link href={'/'} className='flex gap-3 items-center sm:hidden'>
         <img src="logo.png" alt="logo" className='w-6 h-auto rounded-full logo-glow' />
-        <span className='font-[900]'>4Elevenfxtrade</span>
+        <span className='font-[900]'>4xeleventrade</span>
       </Link>
       <div className='flex gap-3'>
         <Link href={'login'} className='hover:opacity-75 rounded-lg border border-[#00eaff] text-col w-[70px] h-[30px] flex justify-center items-center text-sm font-bold'>Login</Link>

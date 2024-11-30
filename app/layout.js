@@ -5,7 +5,7 @@ import { AuthContextProvider } from "@/context/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "4Elevenfxtrade - Crypto currency investment platform",
+  title: "4xeleventrade - Crypto currency investment platform",
   description: "Invest in crypto today and earn more" ,
 };
 

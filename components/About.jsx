@@ -15,7 +15,7 @@ export default function  About() {
       <div className='sm:flex-[1] flex flex-col gap-4 max-sm:w-full items-start max-sm:items-center'>
         <h1 className='text-col text-3xl'>About Us</h1>
         <hr className='w-10 bg-col h-1'/>
-        <p className='max-sm:text-center'>At 4ElevenFXTrade, we are committed to empowering individuals to achieve their financial goals,
+        <p className='max-sm:text-center'>At 4xeleventrade, we are committed to empowering individuals to achieve their financial goals,
            whether it’s paying off student loans, buying a house, starting a business, or planning for a comfortable retirement.
             We understand that financial freedom is the key to unlocking opportunities, and our mission is to provide you with the tools
              and support to make that freedom a reality.
@@ -48,7 +48,7 @@ export default function  About() {
       Join Us
       </span>
       <br />
-      At 4ElevenFXTrade, we believe that everyone deserves the opportunity to create a secure financial future.
+      At 4xeleventrade, we believe that everyone deserves the opportunity to create a secure financial future.
        Let us help you take control of your finances, build wealth, and achieve the life you've always dreamed of.
       </p>
            <Link href={`/login`} className=' flex justify-center items-center w-40 h-10 rounded-lg bg-col hover:opacity-75 text-black text-sm font-bold'>Invest Now</Link>

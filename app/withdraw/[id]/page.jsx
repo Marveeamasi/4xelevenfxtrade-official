@@ -55,7 +55,7 @@ export default function page({params}) {
       setLoading(true);
       await sendEmail({
             to_email: currentUser?.email,
-            subject: '4Elevenfxtrade: Withdrawal request',
+            subject: '4xeleventrade: Withdrawal request',
             message: `Hi Admin, amount: ${amount}, user: ${currentUser?.displayName}, email: ${currentUser?.email}. Visit your dashboard for more information. 
 
 

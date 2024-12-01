@@ -69,7 +69,6 @@ const handlePassChange = (event) => {
         await signInWithEmailAndPassword(auth, email, password);
         setEmail('')
         setPassword('')
-        setPsscd('')
        if(auth?.currentUser?.uid){
         window.location.href = `/dashboard`;
       }

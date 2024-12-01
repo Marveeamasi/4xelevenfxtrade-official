@@ -10,8 +10,6 @@ import { MdKeyboardArrowLeft } from 'react-icons/md';
 export default function page() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [psscd, setPsscd] = useState('');
-  const [psscdError, setPsscdError] = useState(null);
   const [isView, setIsView] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
@@ -19,19 +17,18 @@ export default function page() {
   const [errMessage, setErrMessage] = useState(null)
   const[err, setErr] = useState(false);
   const[loading, setLoading] = useState(false);
-  const pss='12345678';
 
   const toggleView = () => {
      setIsView(!isView)
   }
 
   useEffect(() => {
-    if(emailError||passwordError||psscdError|| !psscd || !email || !password){
+    if(emailError||passwordError|| !email || !password){
      setIsFormValid(false)
     }else{
      setIsFormValid(true)
     }
- }, [emailError, passwordError, passwordError, psscd, email, password ]);
+ }, [emailError, passwordError, email, password ]);
 
  function validateEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -51,37 +48,17 @@ function validatePassword(password) {
   return null;
 }
 
-function validatePsscd(psscd) {
-  if (!psscd.trim()) {
-    return 'A pass code is required.';
-  }
-  if (psscd.length < 6) {
-    return 'Pass code must be greater than 5.';
-  }
-  if (pss!==psscd) {
-    return 'Please contact admin for pass code.';
-  }
-  return null;
-}
-
 const handleEmailChange = (event) => {
   setEmail(event.target.value)
   const error = validateEmail(event.target.value);
   setEmailError(error);
 };
 
-
 const handlePassChange = (event) => {
   setPassword(event.target.value)
   const error = validatePassword(event.target.value);
   setPasswordError(error);
 };
-
-  const handlePsscdChange = (event) => {
-    setPsscd(event.target.value)
-    const error = validatePsscd(event.target.value);
-    setPsscdError(error);
-  };
 
   const handleLogin = async()=> {
     if(isFormValid){
@@ -129,10 +106,6 @@ const handlePassChange = (event) => {
         {isView? <IoEyeOff onClick={toggleView}/> : <IoEye onClick={toggleView}/>}
        </div>
        {passwordError && <p className='p-2 text-[10px]  bg-[#00eaff10] rounded-lg'>{passwordError}</p>}
-       </div>
-       <div className='flex flex-col gap-2'>
-       <input type="text" maxLength={8} onChange={handlePsscdChange} placeholder='Pass-code' className='bg-transparent outline-none placeholder:text-[#a2a1ab] p-3 border border-[#00eaff13] rounded-lg'/>
-       {psscdError && <p className='p-2 text-[10px]  bg-[#00eaff10] rounded-lg'>{psscdError}</p>}
        </div>
        </div>
        <button 

@@ -93,7 +93,7 @@ export default function page({params}) {
       setLoading(true)
       await sendEmail({
             to_email: userEmail,
-            subject: '4Elevenfxtrade: Transaction request',
+            subject: '4xeleventrade: Transaction request',
             message: `Hi Admin, amount: ${amount}, user: ${username}, email: ${userEmail}, screenshotURL: ${screenshotURL}, plan: ${planName}. Visit your dashboard for more information.
 
 

@@ -80,8 +80,8 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
       await updateDoc(requestRef, { requests: updatedRequests });
       await sendEmail({
             to_email: user,
-            subject: '4Elevenfxtrade: Transaction request validation',
-            message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: 4xelevenfxtrade@gmail.com. Visit your admin dashboard for more information.
+            subject: '4xeleventrade: Transaction request validation',
+            message: `Hi ${username || 'dear'}, your payment of ${amount} failed, please contact our customer service: info@4xeleventrade.com. Visit your admin dashboard for more information.
 
 
 
@@ -138,7 +138,7 @@ Sent via Emailjs.
       });
       await sendEmail({
             to_email: user,
-            subject: '4Elevenfxtrade: Transaction request validation',
+            subject: '4xeleventrade: Transaction request validation',
             message: `Hi ${username || 'dear'}, your payment of ${amount} has been approved successfully, now your money grows weekly. Visit your admin dashboard for more information.
 
 

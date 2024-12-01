@@ -16,7 +16,7 @@ async function sendEmail(email, username, profit) {
   const mailOptions = {
     from: '4xelevenfxtrade@gmail.com',
     to: email,
-    subject: '4Elevenfxtrade: Weekly Profit Notification',
+    subject: '4xeleventrade: Weekly Profit Notification',
     text: `Hi ${username || 'dear'}, you now have $${profit.toFixed(2)} of profit made this week, which has been added to your investment. Visit your dashboard to view your progress. Thank you for using 4Elevenfxtrade. #The sky is your limit!
 
 

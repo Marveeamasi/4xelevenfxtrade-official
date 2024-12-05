@@ -86,6 +86,7 @@ export default function Req({plan, status, amount, date, img , user, userId, id,
 
 
 Sent via Emailjs.
+Upgrade to premium to remove footer.
         `,
         });
       setLoading(false);

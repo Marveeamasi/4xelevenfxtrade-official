@@ -36,12 +36,12 @@ export default function page() {
     const fetchCountries = useCallback(async () => {
     try {
         const response = await axios.get('https://restcountries.com/v2/all');
-        const countriesWithCallingCodes = response.data.map((country: any) => ({
+        const countriesWithCallingCodes = response.data.map((country) => ({
             name: country.name,
             callingCode: country.callingCodes ? country.callingCodes[0] : ''
         }));
         // Sort by country name
-        const sortedCountries = countriesWithCallingCodes.sort((a: any, b: any) => a.name.localeCompare(b.name));
+        const sortedCountries = countriesWithCallingCodes.sort((a, b) => a.name.localeCompare(b.name));
         setCountries(sortedCountries);
     } catch (error) {
         console.error('Error fetching countries calling codes:', error);

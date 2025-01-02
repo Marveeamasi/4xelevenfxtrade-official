@@ -34,14 +34,20 @@ export default function page() {
     const refId = search;
   
     const fetchCountries = useCallback(async () => {
-      try {
-          const response = await axios.get('https://restcountries.com/v3.1/all');
-          const sortedCountries = response.data.sort((a, b) => a.name.common.localeCompare(b.name.common));
-          setCountries(sortedCountries);
-      } catch (error) {
-          console.error('Error fetching countries:', error);
-      }
-  }, []);
+    try {
+        const response = await axios.get('https://restcountries.com/v2/all');
+        const countriesWithCallingCodes = response.data.map((country: any) => ({
+            name: country.name,
+            callingCode: country.callingCodes ? country.callingCodes[0] : ''
+        }));
+        // Sort by country name
+        const sortedCountries = countriesWithCallingCodes.sort((a: any, b: any) => a.name.localeCompare(b.name));
+        setCountries(sortedCountries);
+    } catch (error) {
+        console.error('Error fetching countries calling codes:', error);
+    }
+}, []);
+
 
   useEffect(() => {
       fetchCountries();
@@ -261,9 +267,9 @@ export default function page() {
         <select className='bg-transparent outline-none text-[#a2a1ab] p-3 border border-[#00eaff13] rounded-lg' name="" id="" value={selectedCountry || "Select Country"} onChange={handleCountryChange}>
        <option value="Select Country">Select Country</option>
         {countries?.length > 0 && countries.map((country) => (
-          <option key={country.name.common}
-           value={country.name.common}>
-            {country.name.common}
+          <option key={country.name}
+           value={country.name}>
+            {country.name}
           </option>
         ))}
        </select> 
@@ -280,9 +286,9 @@ export default function page() {
        <select className='bg-transparent outline-none text-[#a2a1ab]' name="" id="" value={selectedCode || "Code"} onChange={handleCodeChange}>
        <option value="Code">Code</option>
         {countries?.length > 0 && countries.map((country) => (
-          <option key={country.name.common}
-           value={country.ccn3}>
-            {country.ccn3}
+          <option key={country.name}
+           value={country.callingCode}>
+            {country.callingCode}
           </option>
         ))}
        </select> 
